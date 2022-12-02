@@ -12,6 +12,9 @@
     "language": "English",
     "add-to-metamask": "添加到Metamask",
     "add-to-imToken": "添加到imToken",
-    "add-to-wallet": "添加到Wallet"
+    "add-to-wallet": "添加到Wallet",
+    "add-to-brave": "Add to Brave",
+    "add-to-coinbase": "Add to Coinbase Wallet",
+    "add-to-trust": "Add to Trust Wallet"
   }
 }

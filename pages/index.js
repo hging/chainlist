@@ -10,7 +10,29 @@ import classes from "../components/Layout/index.module.css";
 export async function getStaticProps({ locale }) {
   const chains = await fetcher("https://chainid.network/chains.json");
   const chainTvls = await fetcher("https://api.llama.fi/chains");
-
+  chains.push({
+    "name": "Aztec Testnet",
+    "title": "Aztec Testnet",
+    "chain": "ETH",
+    "rpc": [
+      "https://aztec-connect-testnet-eth-host.aztec.network:8545"
+    ],
+    "nativeCurrency": {
+      "name": "Aztec Ether",
+      "symbol": "aETH",
+      "decimals": 18
+    },
+    "explorers": [
+      {
+        "name": "aZTEC Explorer",
+        "url": "https://explorer.aztec.network/",
+        "standard": "none"
+      }
+    ],
+    "shortName": "aeth",
+    "chainId": 677868,
+    "networkId": 677868,
+  })
   const sortedChains = chains
     .filter((c) => c.name !== "420coin") // same chainId as ronin
     .map((chain) => populateChain(chain, chainTvls))
@@ -39,9 +61,9 @@ function Home({ changeTheme, theme, sortedChains }) {
           item.title?.toLowerCase().includes("test") ||
           item.network?.toLowerCase().includes("test");
         const devnet =
-            item.name?.toLowerCase().includes("devnet") ||
-            item.title?.toLowerCase().includes("devnet") ||
-            item.network?.toLowerCase().includes("devnet");
+          item.name?.toLowerCase().includes("devnet") ||
+          item.title?.toLowerCase().includes("devnet") ||
+          item.network?.toLowerCase().includes("devnet");
         return !testnet && !devnet;
       });
     } else return sortedChains;
@@ -62,19 +84,19 @@ function Home({ changeTheme, theme, sortedChains }) {
           {(search === ""
             ? chains
             : chains.filter((chain) => {
-                //filter
-                return (
-                  chain.chain.toLowerCase().includes(search.toLowerCase()) ||
-                  chain.chainId
-                    .toString()
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  chain.name.toLowerCase().includes(search.toLowerCase()) ||
-                  (chain.nativeCurrency ? chain.nativeCurrency.symbol : "")
-                    .toLowerCase()
-                    .includes(search.toLowerCase())
-                );
-              })
+              //filter
+              return (
+                chain.chain.toLowerCase().includes(search.toLowerCase()) ||
+                chain.chainId
+                  .toString()
+                  .toLowerCase()
+                  .includes(search.toLowerCase()) ||
+                chain.name.toLowerCase().includes(search.toLowerCase()) ||
+                (chain.nativeCurrency ? chain.nativeCurrency.symbol : "")
+                  .toLowerCase()
+                  .includes(search.toLowerCase())
+              );
+            })
           ).map((chain, idx) => {
             return <Chain chain={chain} key={idx} />;
           })}
